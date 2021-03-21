@@ -3,9 +3,9 @@
 one:
   itemDescription: MyString
   priorityNumber: 1
-  User: one
+  user: one
 
 two:
   itemDescription: MyString
   priorityNumber: 1
-  User: two
+  user: two

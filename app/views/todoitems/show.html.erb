@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Itemdescription:</strong>
+  <%= @todoitem.itemDescription %>
+</p>
+
+<p>
+  <strong>Prioritynumber:</strong>
+  <%= @todoitem.priorityNumber %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @todoitem.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_todoitem_path(@todoitem) %> |
+<%= link_to 'Back', todoitems_path %>
