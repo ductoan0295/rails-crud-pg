@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   post "/users" => "users#create"
   get "/todoitems" => "todoitems#index"
   post "/todoitems/create" => "todoitems#create"
+  post "/todoitems/update" => "todoitems#update"
+  post "/todoitems/delete" => "todoitems#destroy"
 end

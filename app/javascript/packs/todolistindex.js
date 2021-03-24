@@ -13,7 +13,7 @@
                     data: { itemDescription: item },
                     dataType: "json",
                     success: function (response) {
-                        todoListItem.append("<li><div class= 'form-check' > <label class='form-check-label'><input class='checkbox' type='checkbox' />" + item + "<i class='input-helper'></i></label></div > <i class='remove mdi mdi-close-circle-outline'></i></li > ");
+                        todoListItem.append(`<li><div class= 'form-check' > <label class='form-check-label'><input id='${response.id}' class='checkbox' type='checkbox' /> ${item} <i class='input-helper'></i></label></div > <i id='${response.id}' class='remove mdi mdi-close-circle-outline'></i></li >`);
                         todoListInput.val("");
                     },
                     error: function (error) {
@@ -27,8 +27,8 @@
             if ($(this).attr('checked')) {
                 $.ajax({
                     type: "POST",
-                    url: '/todoitems',
-                    data: { itemDescription: item },
+                    url: '/todoitems/update',
+                    data: { id: $(this).attr('id'), done: false },
                     dataType: "json",
                     success: function (response) {
                         $(this).removeAttr('checked');
@@ -38,15 +38,40 @@
                     }
                 });
             } else {
-                $(this).attr('checked', 'checked');
+                $.ajax({
+                    type: "POST",
+                    url: '/todoitems/update',
+                    data: { id: $(this).attr('id'), done: true },
+                    dataType: "json",
+                    success: function (response) {
+                        $(this).attr('checked', 'checked');
+                    },
+                    error: function (error) {
+                        alert("Cannot update the todo item to the current list!!!");
+                    }
+                });
+                $(this).closest("li").toggleClass('completed');
             }
-
-            $(this).closest("li").toggleClass('completed');
-
         });
 
         todoListItem.on('click', '.remove', function () {
             $(this).parent().remove();
+            $.ajax({
+                type: "POST",
+                url: '/todoitems/delete',
+                data: { id: $(this).attr('id') },
+                dataType: "json",
+                success: function (response) {
+                    $(this).parent().remove();
+                },
+                error: function (error) {
+                    if(error.status === 200){
+                        $(this).parent().remove();
+                    } else {
+                        alert(error.status);
+                    }
+                }
+            });
         });
 
     });

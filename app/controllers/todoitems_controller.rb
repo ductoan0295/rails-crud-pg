@@ -1,27 +1,14 @@
 class TodoitemsController < ApplicationController
-  before_action :set_todoitem, only: %i[ show edit update destroy ]
+  before_action :set_todoitem, only: %i[ update destroy ]
   skip_before_action :verify_authenticity_token
 
   # GET /todoitems or /todoitems.json
   def index
     if session[:logged_in_userid]
-      @todoitems = Todoitem.all
+      @todoitems = Todoitem.where("user_id = ?", session[:logged_in_userid])
     else
       redirect_to "/" 
     end
-  end
-
-  # GET /todoitems/1 or /todoitems/1.json
-  def show
-  end
-
-  # GET /todoitems/new
-  def new
-    @todoitem = Todoitem.new
-  end
-
-  # GET /todoitems/1/edit
-  def edit
   end
 
   # POST /todoitems or /todoitems.json
@@ -42,8 +29,9 @@ class TodoitemsController < ApplicationController
 
   # PATCH/PUT /todoitems/1 or /todoitems/1.json
   def update
+    # @todoitem = Todoitem.find_by(id: todoitem_update_params[:id])
     respond_to do |format|
-      if @todoitem.update(todoitem_params)
+      if @todoitem.update(todoitem_update_params)
         format.html { redirect_to @todoitem, notice: "Todoitem was successfully updated." }
         format.json { render :show, status: :ok, location: @todoitem }
       else
@@ -58,7 +46,7 @@ class TodoitemsController < ApplicationController
     @todoitem.destroy
     respond_to do |format|
       format.html { redirect_to todoitems_url, notice: "Todoitem was successfully destroyed." }
-      format.json { head :no_content }
+      format.json { head 200 }
     end
   end
 
@@ -66,5 +54,9 @@ class TodoitemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_todoitem
       @todoitem = Todoitem.find(params[:id])
+    end
+
+    def todoitem_update_params
+      params.permit(:id, :done)
     end
 end
