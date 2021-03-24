@@ -2,10 +2,10 @@
 
 one:
   itemDescription: MyString
-  priorityNumber: 1
+  done: false
   user: one
 
 two:
   itemDescription: MyString
-  priorityNumber: 1
+  done: false
   user: two

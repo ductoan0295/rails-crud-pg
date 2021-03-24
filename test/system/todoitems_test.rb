@@ -14,8 +14,8 @@ class TodoitemsTest < ApplicationSystemTestCase
     visit todoitems_url
     click_on "New Todoitem"
 
+    check "Done" if @todoitem.done
     fill_in "Itemdescription", with: @todoitem.itemDescription
-    fill_in "Prioritynumber", with: @todoitem.priorityNumber
     fill_in "User", with: @todoitem.user_id
     click_on "Create Todoitem"
 
@@ -27,8 +27,8 @@ class TodoitemsTest < ApplicationSystemTestCase
     visit todoitems_url
     click_on "Edit", match: :first
 
+    check "Done" if @todoitem.done
     fill_in "Itemdescription", with: @todoitem.itemDescription
-    fill_in "Prioritynumber", with: @todoitem.priorityNumber
     fill_in "User", with: @todoitem.user_id
     click_on "Update Todoitem"
 

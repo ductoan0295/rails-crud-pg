@@ -17,7 +17,7 @@ class TodoitemsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create todoitem" do
     assert_difference('Todoitem.count') do
-      post todoitems_url, params: { todoitem: { itemDescription: @todoitem.itemDescription, priorityNumber: @todoitem.priorityNumber, user_id: @todoitem.user_id } }
+      post todoitems_url, params: { todoitem: { done: @todoitem.done, itemDescription: @todoitem.itemDescription, user_id: @todoitem.user_id } }
     end
 
     assert_redirected_to todoitem_url(Todoitem.last)
@@ -34,7 +34,7 @@ class TodoitemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update todoitem" do
-    patch todoitem_url(@todoitem), params: { todoitem: { itemDescription: @todoitem.itemDescription, priorityNumber: @todoitem.priorityNumber, user_id: @todoitem.user_id } }
+    patch todoitem_url(@todoitem), params: { todoitem: { done: @todoitem.done, itemDescription: @todoitem.itemDescription, user_id: @todoitem.user_id } }
     assert_redirected_to todoitem_url(@todoitem)
   end
 

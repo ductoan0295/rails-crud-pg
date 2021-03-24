@@ -2,7 +2,7 @@ class CreateTodoitems < ActiveRecord::Migration[6.1]
   def change
     create_table :todoitems do |t|
       t.string :itemDescription
-      t.integer :priorityNumber
+      t.boolean :done
       t.belongs_to :user, null: false, foreign_key: true
 
       t.timestamps

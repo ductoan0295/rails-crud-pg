@@ -1,24 +1,39 @@
 class TodoitemsController < ApplicationController
   before_action :set_todoitem, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token
 
   # GET /todoitems or /todoitems.json
   def index
     @todoitems = Todoitem.all
   end
 
+  # GET /todoitems/1 or /todoitems/1.json
+  def show
+  end
+
+  # GET /todoitems/new
+  def new
+    @todoitem = Todoitem.new
+  end
+
+  # GET /todoitems/1/edit
+  def edit
+  end
+
   # POST /todoitems or /todoitems.json
   def create
-    @todoitem = Todoitem.new(todoitem_params)
-
-    respond_to do |format|
-      if @todoitem.save
-        format.html { redirect_to @todoitem, notice: "Todoitem was successfully created." }
-        format.json { render :show, status: :created, location: @todoitem }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @todoitem.errors, status: :unprocessable_entity }
+    if session[:logged_in_userid]
+      @todoitem = Todoitem.new(itemDescription: params[:itemDescription], done: false, user_id: session[:logged_in_userid])
+      respond_to do |format|
+        if @todoitem.save
+          format.html { redirect_to @todoitem, notice: "Todoitem was successfully created." }
+          format.json { render :show, status: :created, location: @todoitem }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @todoitem.errors, status: :unprocessable_entity }
+        end
       end
-    end
+    end 
   end
 
   # PATCH/PUT /todoitems/1 or /todoitems/1.json
@@ -47,10 +62,5 @@ class TodoitemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_todoitem
       @todoitem = Todoitem.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def todoitem_params
-      params.require(:todoitem).permit(:itemDescription, :priorityNumber, :user_id)
     end
 end

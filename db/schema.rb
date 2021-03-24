@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_174210) do
+ActiveRecord::Schema.define(version: 2021_03_24_153905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "todoitems", force: :cascade do |t|
     t.string "itemDescription"
-    t.integer "priorityNumber"
+    t.boolean "done"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
