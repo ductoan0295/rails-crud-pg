@@ -6,19 +6,6 @@ class TodoitemsController < ApplicationController
     @todoitems = Todoitem.all
   end
 
-  # GET /todoitems/1 or /todoitems/1.json
-  def show
-  end
-
-  # GET /todoitems/new
-  def new
-    @todoitem = Todoitem.new
-  end
-
-  # GET /todoitems/1/edit
-  def edit
-  end
-
   # POST /todoitems or /todoitems.json
   def create
     @todoitem = Todoitem.new(todoitem_params)
