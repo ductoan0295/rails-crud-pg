@@ -3,12 +3,13 @@
     $(function () {
         var todoListItem = $('.todo-list');
         var todoListInput = $('.todo-list-input');
+
         $('.todo-list-add-btn').on("click", function (event) {
             var item = $(this).prevAll('.todo-list-input').val();
             if (item) {
                 $.ajax({
                     type: "POST",
-                    url: '/todoitems',
+                    url: '/todoitems/create',
                     data: { itemDescription: item },
                     dataType: "json",
                     success: function (response) {
@@ -24,7 +25,18 @@
 
         todoListItem.on('change', '.checkbox', function () {
             if ($(this).attr('checked')) {
-                $(this).removeAttr('checked');
+                $.ajax({
+                    type: "POST",
+                    url: '/todoitems',
+                    data: { itemDescription: item },
+                    dataType: "json",
+                    success: function (response) {
+                        $(this).removeAttr('checked');
+                    },
+                    error: function (error) {
+                        alert("Cannot update the todo item to the current list!!!")
+                    }
+                });
             } else {
                 $(this).attr('checked', 'checked');
             }

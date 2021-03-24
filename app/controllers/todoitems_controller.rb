@@ -4,7 +4,11 @@ class TodoitemsController < ApplicationController
 
   # GET /todoitems or /todoitems.json
   def index
-    @todoitems = Todoitem.all
+    if session[:logged_in_userid]
+      @todoitems = Todoitem.all
+    else
+      redirect_to "/" 
+    end
   end
 
   # GET /todoitems/1 or /todoitems/1.json
